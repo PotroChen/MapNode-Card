@@ -6,3 +6,7 @@
 	path = GameProject/Packages/com.potro.core
 	url = https://github.com/PotroChen/com.potro.core.git
 	branch = main
+[submodule "GameProject/Packages/com.potro.uikit"]
+	path = GameProject/Packages/com.potro.uikit
+	url = https://github.com/PotroChen/com.potro.uikit.git
+	branch = main
