@@ -1,0 +1,4 @@
+[submodule "GameProject/Packages/com.potro.gamedata"]
+	path = GameProject/Packages/com.potro.gamedata
+	url = https://github.com/PotroChen/com.potro.gamedata.git
+	branch = main
