@@ -4,3 +4,5 @@ Logs
 *.sln
 /GameProject/.vsconfig
 Temp
+.vs
+obj
