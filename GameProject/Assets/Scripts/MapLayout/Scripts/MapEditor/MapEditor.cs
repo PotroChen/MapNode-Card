@@ -80,7 +80,7 @@ namespace Game
 
         public void OnSaveBtn_Click()
         {
-            string path = UnityEditor.EditorUtility.SaveFilePanel("保存MapLayout", "Assets/MapLayoutAsset", "NewMapLayout", "asset");
+            string path = UnityEditor.EditorUtility.SaveFilePanel("保存MapLayout", "Assets/GameResources/MapLayoutAssets", "NewMapLayout", "asset");
             if (!string.IsNullOrEmpty(path))
             {
                 path = "Assets" + path.Replace(Application.dataPath, "");
