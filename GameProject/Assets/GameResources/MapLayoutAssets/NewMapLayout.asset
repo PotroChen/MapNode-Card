@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653eb4f2657b3e246a7179be7ad1e04f, type: 3}
+  m_Name: NewMapLayout
+  m_EditorClassIdentifier: 
+  m_AllNodes:
+  - m_GUIDStr: aee6921c-0d62-44a6-a15a-c0a95830b127
+    m_Position: {x: 0, y: 0}
+    m_Name: StartNode
+    m_ConnectedNodes:
+    - 663941a2-5b84-4fbb-aa4f-97ca6f959b06
+    m_Entities: []
+  - m_GUIDStr: 663941a2-5b84-4fbb-aa4f-97ca6f959b06
+    m_Position: {x: 0, y: 1}
+    m_Name: "\u4F60\u597D"
+    m_ConnectedNodes:
+    - aee6921c-0d62-44a6-a15a-c0a95830b127
+    - c8ed0007-9279-4bfb-a207-c832aa23c093
+    m_Entities: []
+  - m_GUIDStr: c8ed0007-9279-4bfb-a207-c832aa23c093
+    m_Position: {x: -1, y: 1}
+    m_Name: New Node
+    m_ConnectedNodes:
+    - 663941a2-5b84-4fbb-aa4f-97ca6f959b06
+    m_Entities: []
