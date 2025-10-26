@@ -1,4 +1,5 @@
 using Game;
+using Game.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Game
             yield return Addressables.InitializeAsync();
             //GameDataRuntime.Instance.Init(true);
 
-            //GameRuntime.Goto<Login>(null, "Login");
+            GameRuntime.Goto<LoginScene>();
         }
     }
 }

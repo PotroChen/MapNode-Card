@@ -9,7 +9,7 @@ namespace Game
     {
         public IGameScene Current { get { return instance.m_Current; } }
 
-        public static void Goto<T>(IGameData data, string sceneName = "") where T : IGameScene, new()
+        public static void Goto<T>(IGameData data = null, string sceneName = "") where T : IGameScene, new()
         {
             instance.Goto_Internal<T>(data, sceneName);
         }
