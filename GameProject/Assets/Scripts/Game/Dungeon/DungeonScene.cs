@@ -1,3 +1,5 @@
+using Game.UI;
+using GameFramework.UIKit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,11 +25,17 @@ namespace Game
 
         public void OnLoad()
         {
+            var layoutView = GameObject.FindObjectOfType<MapLayoutView>();
+            layoutView.data = dungeonMapAssetOp.Result;
+            layoutView.data.Init();
+            layoutView.Refresh();
 
+            UIManager.Goto<DungeonPanel>();
         }
 
         public void OnEnter()
         {
+
         }
 
 

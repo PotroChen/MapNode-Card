@@ -33,7 +33,6 @@ namespace Game.UI
             DungeonSceneData sceneData = new DungeonSceneData();
             sceneData.DungeonMapAssetPath = "Assets/GameResources/MapLayoutAssets/DemoDungeon.asset";
             GameRuntime.Goto<DungeonScene>(sceneData, DungeonScene.SceneAsset);
-
         }
         #endregion
     }
