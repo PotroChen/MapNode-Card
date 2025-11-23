@@ -84,6 +84,7 @@ namespace Game
                 entityList = new ReorderableList(node.Entities, typeof(MapEntity));
                 entityList.onAddCallback += OnClick_AddEntity;
                 entityList.onRemoveCallback+= OnClick_RemoveEntity;
+                entityList.onSelectCallback += OnClick_SelectEntity;
             }
             entityList.DoLayoutList();
         }
@@ -109,6 +110,16 @@ namespace Game
                 }
             }
            
+        }
+
+        private void OnClick_SelectEntity(ReorderableList reorderableList)
+        {
+            if (reorderableList.selectedIndices == null 
+                || reorderableList.selectedIndices.Count <= 0)
+                return;
+            int selectedIndex = reorderableList.selectedIndices[0];
+            var mapEntity = reorderableList.list[selectedIndex] as MapEntity;
+            Selection.activeObject = mapEntity;
         }
         #endregion
 

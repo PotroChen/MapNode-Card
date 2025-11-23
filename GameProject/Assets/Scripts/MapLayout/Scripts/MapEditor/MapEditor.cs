@@ -88,6 +88,8 @@ namespace Game
                 path = "Assets" + path.Replace(Application.dataPath, "");
                 SaveLayout(LayoutView.Data, path);
             }
+
+            UnityEditor.EditorApplication.isPlaying = false;
         }
 
         public void OnRightClickNodeView(MapEvents.RightClickNodeViewArgs eventArgs)
@@ -138,6 +140,7 @@ namespace Game
             {
                 AssetDatabase.AddObjectToAsset(entity, path);
             }
+            AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
 
