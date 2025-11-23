@@ -47,14 +47,6 @@ namespace Game
         }
 
         [SerializeField]
-        private string m_Name;
-        public string Name
-        {
-            get { return m_Name; }
-            set { m_Name = value; }
-        }
-
-        [SerializeField]
         private List<string> m_ConnectedNodes;
         public List<string> ConnectedNodes
         {
@@ -63,8 +55,24 @@ namespace Game
         }
 
         [SerializeField]
-        private MapEntity[] m_Entities;
-        public MapEntity[] Entities
+        private string m_Name;
+        public string Name
+        {
+            get { return m_Name; }
+            set { m_Name = value; }
+        }
+
+        [SerializeField]
+        private string m_Description;
+        public string Description
+        {
+            get { return m_Description; }
+            set { m_Description = value; }
+        }
+
+        [SerializeField]
+        private List<MapEntity> m_Entities;
+        public List<MapEntity> Entities
         {
             get { return m_Entities; }
             set { m_Entities = value; }

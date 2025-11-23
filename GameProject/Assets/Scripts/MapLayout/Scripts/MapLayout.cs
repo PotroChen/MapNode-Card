@@ -138,6 +138,29 @@ namespace Game
             guid2NodeDic.TryGetValue(guid, out MapNode node);
             return node;
         }
+
+        public List<MapEntity> GetAllEntities()
+        {
+            var entities = new List<MapEntity>();
+            if (m_AllNodes != null && m_AllNodes.Count > 0)
+            {
+                foreach (var node in m_AllNodes)
+                {
+                    if(node == null)
+                        continue;
+                    if (node.Entities != null && node.Entities.Count > 0)
+                    {
+                        foreach (var entity in node.Entities)
+                        {
+                            if(entity == null)
+                                continue;
+                            entities.Add(entity);
+                        }
+                    }
+                }
+            }
+            return entities;
+        }
         #endregion
     }
 }

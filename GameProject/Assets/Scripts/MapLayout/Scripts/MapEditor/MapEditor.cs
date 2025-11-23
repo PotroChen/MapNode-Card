@@ -1,4 +1,5 @@
 using GameFramework;
+using UnityEditor;
 using UnityEngine;
 
 namespace Game
@@ -70,7 +71,8 @@ namespace Game
             {
                 path = "Assets" + path.Replace(Application.dataPath, "");
                 var mapLayout =  UnityEditor.AssetDatabase.LoadAssetAtPath<MapLayout>(path);
-                var instance =  ScriptableObject.Instantiate(mapLayout);
+                var instance = Instantiate_Editor(mapLayout); 
+                instance.name = instance.name.Replace("(Clone)","");
                 LoadMapLayout(instance);
 
                 mainPanel.gameObject.SetActive(false);
@@ -84,7 +86,7 @@ namespace Game
             if (!string.IsNullOrEmpty(path))
             {
                 path = "Assets" + path.Replace(Application.dataPath, "");
-                UnityEditor.AssetDatabase.CreateAsset(LayoutView.Data, path);
+                SaveLayout(LayoutView.Data, path);
             }
         }
 
@@ -92,6 +94,54 @@ namespace Game
         {
             nodeEditMenu.Show(eventArgs.nodeView);
         }
+
+
+        public static MapLayout Instantiate_Editor(MapLayout layout)
+        {
+            if(layout == null)
+                return null;
+            var instance = ScriptableObject.Instantiate(layout);
+            instance.name = instance.name.Replace("(Clone)", "");
+
+            //Entity要用cloned出来的，不然还是引用原先asset中的Entity
+            if (instance.AllNodes != null)
+            {
+                foreach (var node in instance.AllNodes)
+                {
+                    if (node == null || node.Entities == null)
+                        continue;
+                    for (int i = 0; i < node.Entities.Count; i++)
+                    {
+                        var entity = node.Entities[i];
+                        if (entity == null) continue;
+                        if (AssetDatabase.IsSubAsset(entity))
+                        {
+                            var clonedEntity = ScriptableObject.Instantiate(entity);
+                            clonedEntity.name = clonedEntity.name.Replace("(Clone)", "");
+                            node.Entities[i] = clonedEntity;
+                        }
+                    }
+                }
+            }
+            return instance;
+        }
+
+        public void SaveLayout(MapLayout data,string path)
+        {
+            var oldAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+            if (oldAsset != null)
+                AssetDatabase.DeleteAsset(path);
+
+            UnityEditor.AssetDatabase.CreateAsset(data, path);
+            var allEntities = LayoutView.Data.GetAllEntities();
+            foreach (var entity in allEntities)
+            {
+                AssetDatabase.AddObjectToAsset(entity, path);
+            }
+            AssetDatabase.Refresh();
+        }
+
+
 
         #endregion
 

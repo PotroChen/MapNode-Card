@@ -6,6 +6,5 @@ namespace Game
 {
     public abstract class MapEntity : ScriptableObject
     {
-        public abstract string Name { get; }
     }
 }
