@@ -4,10 +4,23 @@ using UnityEngine;
 
 namespace Game
 {
-    public class MapLayout : ScriptableObject
+    public partial class MapLayout
+    {
+        [Serializable]
+        public class ItemDefine
+        {
+            public string Key;
+            public string Name;
+            public string Desc;
+        }
+    }
+    public partial class MapLayout : ScriptableObject
     {
         [SerializeField]
-        private List<MapNode> m_AllNodes;
+        private List<ItemDefine> m_LocalItems = new List<ItemDefine>();
+
+        [SerializeField]
+        private List<MapNode> m_AllNodes = new List<MapNode>();
         public List<MapNode> AllNodes { get => m_AllNodes; set => m_AllNodes = value; }
 
         private MapNode m_StartNode;
@@ -48,24 +61,45 @@ namespace Game
 
         private Dictionary<Guid, MapNode> guid2NodeDic = new Dictionary<Guid, MapNode>();
         private Dictionary<Vector2Int, MapNode> pos2NodeDic = new Dictionary<Vector2Int, MapNode>();
+        private Dictionary<string, ItemDefine> key2LocalItemDic = new Dictionary<string, ItemDefine>();
 
         private int idGenderator = 0;
         public void Init()
         {
             idGenderator = 0;
             pos2NodeDic.Clear();
-            if (AllNodes == null || AllNodes.Count <= 0)
-                return;
-            for (int i = AllNodes.Count - 1; i >= 0; i--)
+            //节点初始化
+            if (AllNodes != null && AllNodes.Count > 0)
             {
-                var node = AllNodes[i];
-                if (node != null)
+                for (int i = AllNodes.Count - 1; i >= 0; i--)
                 {
-                    node.Layout = this;
-                    node.RuntimeID = ++idGenderator;
-                    if (!TryRegisterNode(node))
+                    var node = AllNodes[i];
+                    if (node != null)
                     {
-                        AllNodes.RemoveAt(i);
+                        node.Layout = this;
+                        node.RuntimeID = ++idGenderator;
+                        if (!TryRegisterNode(node))
+                        {
+                            AllNodes.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+            //LocalItem初始化
+            key2LocalItemDic.Clear();
+            if (m_LocalItems != null && m_LocalItems.Count > 0)
+            {
+                foreach (var localItem in m_LocalItems)
+                {
+                    if(localItem == null)
+                        continue;
+                    if (key2LocalItemDic.TryGetValue(localItem.Key, out var itemDefine))
+                    {
+                        Debug.LogError($"[MapLayout]Name:{name},存在相同的Key:{localItem.Key}");
+                    }
+                    else
+                    {
+                        key2LocalItemDic[localItem.Key] = itemDefine;
                     }
                 }
             }

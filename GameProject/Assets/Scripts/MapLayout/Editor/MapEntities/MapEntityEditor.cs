@@ -18,11 +18,16 @@ namespace Game
             serializedObject.Update();
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(nameProp);
+            OnInspectorGUI_Internal();
             if (EditorGUI.EndChangeCheck())
             {
                 serializedObject.ApplyModifiedProperties();
             }
-            base.OnInspectorGUI();
+        }
+
+        protected virtual void OnInspectorGUI_Internal()
+        {
+            
         }
     }
 

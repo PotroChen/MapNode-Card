@@ -12,23 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 653eb4f2657b3e246a7179be7ad1e04f, type: 3}
   m_Name: DemoDungeon
   m_EditorClassIdentifier: 
+  m_LocalItems:
+  - Key: key_01
+    Name: "\u94A5\u5319"
+    Desc: "\u4E00\u4E2A\u666E\u901A\u7684\u94A5\u5319"
   m_AllNodes:
   - m_GUIDStr: aee6921c-0d62-44a6-a15a-c0a95830b127
     m_Position: {x: 0, y: 0}
-    m_Name: StartNode
     m_ConnectedNodes:
     - 663941a2-5b84-4fbb-aa4f-97ca6f959b06
+    m_Name: "\u4E00\u4E2A\u660F\u6697\u7684\u623F\u95F4"
+    m_Description: "\u4F60\u4ECE\u9ED1\u6697\u4E2D\u9192\u8FC7\u6765\uFF0C\u4E0D\u77E5\u9053\u81EA\u5DF1\u8EAB\u5904\u4F55\u65B9"
     m_Entities: []
   - m_GUIDStr: 663941a2-5b84-4fbb-aa4f-97ca6f959b06
     m_Position: {x: 0, y: 1}
-    m_Name: "\u4F60\u597D"
     m_ConnectedNodes:
     - aee6921c-0d62-44a6-a15a-c0a95830b127
-    - c8ed0007-9279-4bfb-a207-c832aa23c093
-    m_Entities: []
-  - m_GUIDStr: c8ed0007-9279-4bfb-a207-c832aa23c093
-    m_Position: {x: -1, y: 1}
-    m_Name: New Node
-    m_ConnectedNodes:
-    - 663941a2-5b84-4fbb-aa4f-97ca6f959b06
-    m_Entities: []
+    m_Name: "\u8FC7\u9053"
+    m_Description: 
+    m_Entities:
+    - {fileID: 8485091155350795056}
+--- !u!114 &8485091155350795056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c78948651c71194fb71bf9b3f12d9e3, type: 3}
+  m_Name: "\u7EB8\u7BB1"
+  m_EditorClassIdentifier: 
+  m_ItemSource: 0
+  m_ItemKey: key_01
+  m_ItemID: 0
+  m_Count: 1
