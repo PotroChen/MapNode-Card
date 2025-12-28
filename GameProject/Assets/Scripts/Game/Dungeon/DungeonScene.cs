@@ -1,9 +1,7 @@
+using Game.DungeonModule;
 using Game.UI;
 using GameFramework.UIKit;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Game
@@ -16,11 +14,10 @@ namespace Game
     {
         public const string SceneAsset = "Assets/GameResources/Scenes/DungeonScene.unity";
         private AsyncOperationHandle<MapLayout> dungeonMapAssetOp;
+        private Dungeon dungeon;
         public void OnInit(IGameData data)
         {
-            var convertedData = data as DungeonSceneData;
-            dungeonMapAssetOp = Addressables.LoadAssetAsync<MapLayout>(convertedData.DungeonMapAssetPath);
-            dungeonMapAssetOp.WaitForCompletion();
+            dungeon = Dungeon.Create(SceneAsset);
         }
 
         public void OnLoad()
@@ -35,19 +32,23 @@ namespace Game
 
         public void OnEnter()
         {
-
+            dungeon.Enter();
         }
 
 
         public void OnLeave()
         {
-
+            dungeon.Exit();
         }
 
 
         public void OnPurge()
         {
-
+            if (dungeon != null)
+            {
+                Dungeon.Destory(dungeon);
+                dungeon = null;
+            }
         }
 
         public void OnUpdate()

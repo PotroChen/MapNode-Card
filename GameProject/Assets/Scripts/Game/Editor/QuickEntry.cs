@@ -12,4 +12,10 @@ public static class QuickEntry
         EditorSceneManager.OpenScene("Assets/Scenes/Launcher.unity");
     }
 
+    [MenuItem("Game/快速入口/MapEditor")]
+    public static void EnterMapEditor()
+    {
+        EditorSceneManager.OpenScene("Assets/Scripts/MapLayout/Editor/Scene/MapEditor.unity");
+    }
+
 }
