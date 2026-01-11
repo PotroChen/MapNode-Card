@@ -13,20 +13,19 @@ namespace Game
     public class DungeonScene : IGameScene
     {
         public const string SceneAsset = "Assets/GameResources/Scenes/DungeonScene.unity";
-        private AsyncOperationHandle<MapLayout> dungeonMapAssetOp;
+        private DungeonSceneData sceneData;
         private Dungeon dungeon;
+        private DungeonView dungeonView;
         public void OnInit(IGameData data)
         {
-            dungeon = Dungeon.Create(SceneAsset);
+            sceneData = data as DungeonSceneData;
+
+            dungeon = Dungeon.Create(sceneData.DungeonMapAssetPath);
+            dungeonView = DungeonView.Create(dungeon);
         }
 
         public void OnLoad()
         {
-            var layoutView = GameObject.FindObjectOfType<MapLayoutView>();
-            layoutView.data = dungeonMapAssetOp.Result;
-            layoutView.data.Init();
-            layoutView.Refresh();
-
             UIManager.Goto<DungeonPanel>();
         }
 
@@ -44,6 +43,11 @@ namespace Game
 
         public void OnPurge()
         {
+            if (dungeonView != null)
+            {
+                DungeonView.Destory(dungeonView);
+                dungeonView = null;
+            }
             if (dungeon != null)
             {
                 Dungeon.Destory(dungeon);

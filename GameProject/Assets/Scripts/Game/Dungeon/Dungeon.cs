@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -5,6 +6,7 @@ namespace Game.DungeonModule
 {
     public class Dungeon 
     {
+        #region Static Function
         public static Dungeon Create(string mapPath)
         {
             Dungeon dungeon = new Dungeon();
@@ -16,6 +18,14 @@ namespace Game.DungeonModule
         {
             dungeon.OnDestroy();
         }
+        #endregion
+
+        public MapLayout Map => map;
+
+        #region Events
+        public event Action<Dungeon> OnEntered;
+        public event Action<Dungeon> OnExited;
+        #endregion
 
         private AsyncOperationHandle<MapLayout> dungeonMapAssetOp;
         private MapLayout map;
@@ -48,12 +58,12 @@ namespace Game.DungeonModule
 
         private void OnEnter()
         {
-
+            OnEntered?.Invoke(this);
         }
 
         private void OnExit()
         {
-            
+            OnExited?.Invoke(this);
         }
     }
 
