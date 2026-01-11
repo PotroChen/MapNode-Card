@@ -11,7 +11,6 @@ namespace Game.DungeonModule
 
         public Vector2Int Position;
 
-
     }
 
 }

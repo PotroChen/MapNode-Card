@@ -36,6 +36,12 @@ namespace Game
             DontDestroyOnLoad(this);
         }
 
+        private void Update()
+        {
+            if(Current!=null)
+                Current.OnUpdate();
+        }
+
         private void OnDestroy()
         {
             if (instance == this)

@@ -48,9 +48,12 @@ MonoBehaviour:
   data:
     m_GUIDStr: 
     m_Position: {x: 0, y: 0}
-    m_Name: 
     m_ConnectedNodes: []
+    m_Name: 
+    m_Description: 
     m_Entities: []
+  frameBg: {fileID: 5402608501229197068}
+  nameText: {fileID: 4378308592375756467}
 --- !u!1 &2257777429878406710
 GameObject:
   m_ObjectHideFlags: 0

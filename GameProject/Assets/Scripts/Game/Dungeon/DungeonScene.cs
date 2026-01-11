@@ -57,6 +57,28 @@ namespace Game
 
         public void OnUpdate()
         {
+            Vector2Int moveDirection = Vector2Int.zero;
+            if (Input.GetKeyUp(KeyCode.W))
+            {
+                moveDirection = Vector2Int.up;
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                moveDirection = Vector2Int.left;
+            }
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                moveDirection = Vector2Int.down;
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                moveDirection = Vector2Int.right;
+            }
+
+            if (moveDirection != Vector2.zero)
+            {
+                dungeon.PlayerMove(moveDirection);
+            }
 
         }
     }

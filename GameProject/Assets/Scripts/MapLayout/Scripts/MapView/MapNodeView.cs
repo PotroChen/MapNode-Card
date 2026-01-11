@@ -8,7 +8,9 @@ namespace Game
     {
         [HideInInspector]
         public MapNode data;
+        public Image frameBg;
         public Text nameText;
+
         public void Refresh()
         {
             if (data == null)
@@ -16,6 +18,19 @@ namespace Game
 
             nameText.text = data.Name;
         }
+
+        public void SetColor(Color color)
+        {
+            if (nameText != null)
+            {
+                nameText.color = color;
+            }
+            if (frameBg != null)
+            {
+                frameBg.color = color;
+            }
+        }
+
     }
 
 }

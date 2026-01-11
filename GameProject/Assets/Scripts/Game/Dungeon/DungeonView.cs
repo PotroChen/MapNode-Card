@@ -20,6 +20,9 @@ namespace Game.DungeonModule
         }
         #endregion
 
+        public static Color NormalNodeColor = Color.white;
+        public static Color PlayerNodeColor = Color.green;
+
         private Dungeon dungeon;
         private MapLayoutView mapView;
         public DungeonView(Dungeon dungeon) 
@@ -33,11 +36,18 @@ namespace Game.DungeonModule
             dungeon.OnEntered += OnEntered;
             dungeon.OnExited -= OnExited;
             dungeon.OnExited += OnExited;
+            dungeon.OnPlayerMoved -= OnPlayerMoved;
+            dungeon.OnPlayerMoved += OnPlayerMoved;
+            dungeon.OnPlayerMoveFailed -= OnPlayerMoveFailed;
+            dungeon.OnPlayerMoveFailed += OnPlayerMoveFailed;
         }
         private void OnDestory()
         {
             dungeon.OnEntered -= OnEntered;
             dungeon.OnExited -= OnExited;
+            dungeon.OnPlayerMoved -= OnPlayerMoved;
+            dungeon.OnPlayerMoveFailed -= OnPlayerMoveFailed;
+
         }
 
         private void OnEntered(Dungeon dungeon)
@@ -45,11 +55,42 @@ namespace Game.DungeonModule
             mapView = GameObject.FindObjectOfType<MapLayoutView>();
             mapView.data = dungeon.Map;
             mapView.Refresh();
+            RefreshPlayerPosition();
         }
 
         private void OnExited(Dungeon dungeon)
         {
 
         }
+
+        private void OnPlayerMoved(Dungeon dungeon, Vector2Int position)
+        {
+            RefreshPlayerPosition();
+        }
+
+        private void OnPlayerMoveFailed(Dungeon dungeon)
+        {
+            Debug.Log("OnPlayerMoveFailed");
+        }
+
+        private MapNodeView lastPlayerNodeView = null;
+        public void RefreshPlayerPosition()
+        {
+            var playerPosition = dungeon.Player.Position;
+            var node = dungeon.Map.GetNode(playerPosition);
+            if (lastPlayerNodeView != null)
+            {
+                lastPlayerNodeView.SetColor(NormalNodeColor);
+            }
+            if (node != null)
+            {
+                var nodeView = mapView.GetNodeView(node);
+                nodeView.SetColor(PlayerNodeColor);
+
+                lastPlayerNodeView = nodeView;
+            }
+        }
+
+
     }
 }

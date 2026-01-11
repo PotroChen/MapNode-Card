@@ -167,6 +167,12 @@ namespace Game
         }
 
         #region 查询接口
+        public MapNode GetNode(Vector2Int position)
+        {
+            pos2NodeDic.TryGetValue(position, out var node);
+            return node;
+        }
+
         public MapNode GetNode(Guid guid)
         {
             guid2NodeDic.TryGetValue(guid, out MapNode node);

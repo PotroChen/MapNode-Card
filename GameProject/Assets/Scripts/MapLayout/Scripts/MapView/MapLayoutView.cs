@@ -81,6 +81,18 @@ namespace Game
             }
         }
 
+        public MapNodeView GetNodeView(MapNode node)
+        {
+            if (node2ViewDic.TryGetValue(node ,out var po) 
+                && po != null && po.Content != null)
+            {
+                var nodeView = po.Content.GetComponent<MapNodeView>();
+                return nodeView;
+            }
+            return null;
+        }
+
+
         private MapNodeView CreateNodeView_Internal(MapNode node)
         {
             var poolObject = nodePool.Get(nodeRoot);
