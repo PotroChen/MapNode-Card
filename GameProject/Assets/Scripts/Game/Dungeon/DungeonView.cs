@@ -76,8 +76,7 @@ namespace Game.DungeonModule
         private MapNodeView lastPlayerNodeView = null;
         public void RefreshPlayerPosition()
         {
-            var playerPosition = dungeon.Player.Position;
-            var node = dungeon.Map.GetNode(playerPosition);
+            var node = dungeon.GetNodeOfPlayerPosition();
             if (lastPlayerNodeView != null)
             {
                 lastPlayerNodeView.SetColor(NormalNodeColor);

@@ -2,7 +2,6 @@ using Game.DungeonModule;
 using Game.UI;
 using GameFramework.UIKit;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Game
 {
@@ -26,7 +25,9 @@ namespace Game
 
         public void OnLoad()
         {
-            UIManager.Goto<DungeonPanel>();
+            var panelData = new DungeonPanelData();
+            panelData.dungeon = dungeon;
+            UIManager.Goto<DungeonPanel>(panelData);
         }
 
         public void OnEnter()

@@ -1,5 +1,4 @@
 using System;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -85,6 +84,15 @@ namespace Game.DungeonModule
                 OnPlayerMoved?.Invoke(this,nextPosition);
             }
         }
+
+        #region 查询
+        public MapNode GetNodeOfPlayerPosition()
+        {
+            var playerPosition = Player.Position;
+            var node = Map.GetNode(playerPosition);
+            return node;
+        }
+        #endregion
     }
 
 }
