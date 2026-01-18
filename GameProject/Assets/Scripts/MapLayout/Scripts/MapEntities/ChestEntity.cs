@@ -27,5 +27,7 @@ namespace Game
         [SerializeField]
         private int m_Count;
         public int Count => m_Count;
+
+
     }
 }

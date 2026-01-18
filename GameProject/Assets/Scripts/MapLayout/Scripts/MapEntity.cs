@@ -14,5 +14,10 @@ namespace Game
                 name = value;
             }
         }
+
+        public virtual string GetInteractionName()
+        {
+            return "交互";
+        }
     }
 }
