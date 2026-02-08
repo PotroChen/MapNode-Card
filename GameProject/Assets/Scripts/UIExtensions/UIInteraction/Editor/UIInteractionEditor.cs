@@ -26,8 +26,6 @@ namespace GameFramework.UIKit
         SerializedProperty isToggle;
         SerializedProperty nodeActivity_IsOn;
         SerializedProperty nodeActivity_IsOff;
-        bool isOnFoldout = true;
-        bool isOffFoldout = true;
         private void OnEnable()
         {
             onPointerEnter = serializedObject.FindProperty(nameof(UIInteraction.interactions_onPointerEnter));

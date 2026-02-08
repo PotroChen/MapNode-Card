@@ -118,6 +118,7 @@ namespace Game.UI
 
             UIUtils.SetText(itemGO, "InteractiveTip/Label", entity.GetInteractionName()+"(F)");
         }
+
         #endregion
 
         #region 二级菜单
