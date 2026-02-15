@@ -25,8 +25,6 @@ namespace Game.UI
         
         private GameObject go_FirstLevelMenu;
         
-        private GameObject go_SecondLevelMenu;
-        
         protected GameObject NodeSubPanelRoot
         {
             get
@@ -59,14 +57,6 @@ namespace Game.UI
             }
         }
         
-        protected GameObject Go_SecondLevelMenu
-        {
-            get
-            {
-                return this.go_SecondLevelMenu;
-            }
-        }
-        
         protected override void BindParameter()
         {
             base.BindParameter();
@@ -75,7 +65,6 @@ namespace Game.UI
             nodeDescRoot = binder.GetGameObject("NodeDescRoot");
             txt_NodeDesc = binder.GetGameObject("Txt_NodeDesc");
             go_FirstLevelMenu = binder.GetGameObject("Go_FirstLevelMenu");
-            go_SecondLevelMenu = binder.GetGameObject("Go_SecondLevelMenu");
         }
     }
 }

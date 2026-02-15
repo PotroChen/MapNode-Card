@@ -99,7 +99,7 @@ namespace Game
                     }
                     else
                     {
-                        key2LocalItemDic[localItem.Key] = itemDefine;
+                        key2LocalItemDic[localItem.Key] = localItem;
                     }
                 }
             }
@@ -163,6 +163,8 @@ namespace Game
             }
             pos2NodeDic[node.Position] = node;
             guid2NodeDic[node.GUID] = node;
+            node.Init();
+
             return true;
         }
 
@@ -200,6 +202,12 @@ namespace Game
                 }
             }
             return entities;
+        }
+
+        public ItemDefine GetItemDefine(string itemKey)
+        {
+            key2LocalItemDic.TryGetValue(itemKey, out var item);
+            return item;
         }
         #endregion
     }

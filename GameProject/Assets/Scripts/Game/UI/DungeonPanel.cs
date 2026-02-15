@@ -1,6 +1,7 @@
 using Game.DungeonModule;
 using GameFramework.UIKit;
 using UnityEngine;
+using System;
 
 namespace Game.UI
 {
@@ -39,7 +40,6 @@ namespace Game.UI
         {
             base.OnShow();
             go_FirstLevelMenu.SetActive(false);
-            go_SecondLevelMenu.SetActive(false);
             RefreshNodePanel();
         }
 
@@ -115,8 +115,26 @@ namespace Game.UI
             bool selected = selectedIndex_FirstMenu == index;
             UIUtils.SetActive(itemGO, "Selected", selected);
 
+            var toggle = itemGO.GetComponentInChildren<ExToggle>();
+            toggle.Click.RemoveAllListeners();
+            toggle.Click.AddListener(() =>
+            {
+                switch (entity)
+                {
+                    case ChestEntity chest:
+                        {
+                            var uiData = new ChestEntityPanel.Data();
+                            uiData.dungon = dungeon;
+                            uiData.entity = entity as ChestEntity;
+                            UIManager.Goto<ChestEntityPanel>(uiData);
+                            break;
+                        }
+                    default:
+                        throw new NotImplementedException();
+                }
+                
 
-            UIUtils.SetText(itemGO, "InteractiveTip/Label", entity.GetInteractionName()+"(F)");
+            });
         }
 
         #endregion

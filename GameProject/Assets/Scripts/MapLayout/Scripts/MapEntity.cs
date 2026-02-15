@@ -6,6 +6,7 @@ namespace Game
 {
     public abstract class MapEntity : ScriptableObject
     {
+        public MapNode Owner { get; set; }
         public string DisplayName
         {
             get { return name; }

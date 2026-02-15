@@ -19,7 +19,7 @@ namespace Game.UI
         
         private GameObject go_Root;
         
-        private GameObject go_MenuRoot;
+        private RecycleList menuRoot;
         
         protected GameObject Go_Root
         {
@@ -29,11 +29,11 @@ namespace Game.UI
             }
         }
         
-        protected GameObject Go_MenuRoot
+        protected RecycleList MenuRoot
         {
             get
             {
-                return this.go_MenuRoot;
+                return this.menuRoot;
             }
         }
         
@@ -42,7 +42,7 @@ namespace Game.UI
             base.BindParameter();
             var binder = m_Root.GetComponent<UIParameterBinder>();
             go_Root = binder.GetGameObject("Go_Root");
-            go_MenuRoot = binder.GetGameObject("Go_MenuRoot");
+            menuRoot = binder.GetComponent("MenuRoot") as RecycleList;
         }
     }
 }

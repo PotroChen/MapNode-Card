@@ -86,6 +86,19 @@ namespace Game
             this.m_Name = name;
         }
 
+        public void Init()
+        {
+            if (m_Entities != null)
+            {
+                foreach (var entity in m_Entities)
+                {
+                    if (entity == null)
+                        continue;
+                    entity.Owner = this;
+                }
+            }
+        }
+
         public MapNode GetConnectedNodeAt(int index)
         {
             if(ConnectedNodes == null)

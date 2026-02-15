@@ -5,6 +5,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Game.DungeonModule
 {
+    public struct LocalItemStack
+    {
+        public string Key;
+        public uint Count;
+    }
+
     public class Dungeon 
     {
         #region Static Function
