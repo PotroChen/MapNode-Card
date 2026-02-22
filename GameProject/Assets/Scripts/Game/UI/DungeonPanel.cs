@@ -2,20 +2,23 @@ using Game.DungeonModule;
 using GameFramework.UIKit;
 using UnityEngine;
 using System;
-
+using GameFramework;
+using Game.Inventory;
+using System.Collections.Generic;
 namespace Game.UI
 {
     public class DungeonPanelData:IData
     {
         public Dungeon dungeon;
     }
-    public partial class DungeonPanel:UIPanel
+    public partial class DungeonPanel : UIPanel
     {
         protected override PanelConfig ConfigData
          => new PanelConfig()
          {
              PrefabPath = "Assets/GameResources/UI/DungeonPanel/DungeonPanel.prefab",
-             UILayer = UILayer.Normal
+             UILayer = UILayer.Normal,
+             IsPermanent = true,
          };
 
         private Dungeon dungeon;
@@ -34,11 +37,15 @@ namespace Game.UI
             dungeon.OnEntered += OnDungeonEntered;
             dungeon.OnPlayerMoved -= OnPlayerMoved;
             dungeon.OnPlayerMoved += OnPlayerMoved;
+
+            Events.Unsubscribe<InventoryEvents.Changed>(OnInvevntoryChanged);
+            Events.Subscribe<InventoryEvents.Changed>(OnInvevntoryChanged);
         }
 
         protected override void OnShow()
         {
             base.OnShow();
+            ShowNodePanel();
             go_FirstLevelMenu.SetActive(false);
             RefreshNodePanel();
         }
@@ -48,6 +55,7 @@ namespace Game.UI
             base.OnPurge();
             dungeon.OnEntered -= OnDungeonEntered;
             dungeon.OnPlayerMoved -= OnPlayerMoved;
+            Events.Unsubscribe<InventoryEvents.Changed>(OnInvevntoryChanged);
         }
 
         private void OnDungeonEntered(Dungeon dungeon)
@@ -55,12 +63,20 @@ namespace Game.UI
             RefreshNodePanel();
         }
 
-        private void OnPlayerMoved(Dungeon dungeon,Vector2Int position)
+        private void OnPlayerMoved(Dungeon dungeon, Vector2Int position)
         {
             RefreshNodePanel();
         }
 
-
+        #region NodePanel
+        private void ShowNodePanel()
+        {
+            nodeSubPanelRoot.SetActive(true);
+        }
+        private void HideNodePanel()
+        {
+            nodeSubPanelRoot.SetActive(false);
+        }
         private void RefreshNodePanel()
         {
             currentNode = dungeon.GetNodeOfPlayerPosition();
@@ -83,6 +99,8 @@ namespace Game.UI
             //Entities
             RefreshFirstLevelMenu(true);
         }
+        #endregion
+
 
         #region 一级菜单(Entities)
         int selectedIndex_FirstMenu;
@@ -100,12 +118,12 @@ namespace Game.UI
             recycleList.FillList(currentNode.Entities.Count, RefreshFirstLevelMenuItem);
         }
 
-        private void RefreshFirstLevelMenuItem(int index,GameObject itemGO)
+        private void RefreshFirstLevelMenuItem(int index, GameObject itemGO)
         {
             var entity = currentNode.Entities[index];
             if (entity == null)
             {
-                UIUtils.SetText(itemGO,"Text","NULL");
+                UIUtils.SetText(itemGO, "Text", "NULL");
                 return;
             }
 
@@ -123,6 +141,8 @@ namespace Game.UI
                 {
                     case ChestEntity chest:
                         {
+                            HideNodePanel();
+
                             var uiData = new ChestEntityPanel.Data();
                             uiData.dungon = dungeon;
                             uiData.entity = entity as ChestEntity;
@@ -132,16 +152,60 @@ namespace Game.UI
                     default:
                         throw new NotImplementedException();
                 }
-                
+
 
             });
         }
 
         #endregion
 
-        #region 二级菜单
+        #region InventoryInfo
+        private struct InventoryInfo
+        {
+            public string Name;
+            public uint Count;
+        }
 
+        List<InventoryInfo> inventoryInfoes = new List<InventoryInfo>();
+        private void OnInvevntoryChanged()
+        {
+            inventoryInfoes.Clear();
+            int infoCount = 0;
+            //暂时不支持
+            //if (dungeon.Player.inventoryData != null)
+            //{
+            //    foreach (var kvp in dungeon.Player.inventoryData)
+            //    {
+            //        var infoes = kvp.Value;
+            //        if (infoes == null)
+            //            continue;
+            //        infoCount += infoes.Count;
+            //    }
+            //}
+
+            if (dungeon.Player.dungeonInventoryData != null)
+            {
+                foreach (var kvp in dungeon.Player.dungeonInventoryData)
+                {
+                    var itemDefine = dungeon.Map.GetItemDefine(kvp.Key);
+                    if (itemDefine == null)
+                        continue;
+
+                    InventoryInfo info = new InventoryInfo();
+                    info.Name = itemDefine.Name;
+                    info.Count = kvp.Value.Count;
+                    inventoryInfoes.Add(info);
+                }
+            }
+            List_InventoryInfoes.FillList(inventoryInfoes.Count, OnRefreshInvetoryInfo);
+        }
+
+        private void OnRefreshInvetoryInfo(int index,GameObject itemGo)
+        {
+            string text = $"{inventoryInfoes[index].Name} {inventoryInfoes[index].Count}";
+            UIUtils.SetText(itemGo, text);
+
+        }
         #endregion
-
     }
 }

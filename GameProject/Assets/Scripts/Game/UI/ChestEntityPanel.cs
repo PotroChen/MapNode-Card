@@ -29,11 +29,16 @@ namespace Game.UI
 
         protected override void OnShow()
         {
-            menuRoot.FillList(entity.Items.Length, RefreshMenuItem);
+            Refresh();
         }
 
         protected override void OnHide() 
         {
+        }
+
+        private void Refresh()
+        {
+            menuRoot.FillList(entity.Items.Length, RefreshMenuItem);
         }
 
         private void RefreshMenuItem(int index,GameObject menuItemGo)
@@ -49,13 +54,17 @@ namespace Game.UI
             }
             else
             {
+                
                 var itemDefine = entity.Owner.Layout.GetItemDefine(itemData.ItemKey);
+                bool isTaken = entity.IsItemTaken(index);
                 string text = $"{itemDefine.Name} X {count}";
                 UIUtils.SetText(menuItemGo, "Text", text);
+                toggle.interactable = !isTaken;
                 toggle.Click.AddListener(() => 
                 {
                     entity.TryTakeItem(index);
                     dungeon.Player.GainLocalItem(itemData.ItemKey, itemData.Count);
+                    Refresh();
                 });
 
             }

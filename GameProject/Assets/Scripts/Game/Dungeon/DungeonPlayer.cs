@@ -1,8 +1,7 @@
-using Game;
-using System.Collections;
+using Game.Inventory;
+using GameFramework;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Inventory;
 
 namespace Game.DungeonModule
 {
@@ -12,7 +11,7 @@ namespace Game.DungeonModule
 
         public Vector2Int Position;
 
-        private Dictionary<ItemType,Dictionary<uint,ItemStack>> inventoryData = new Dictionary<ItemType, Dictionary<uint, ItemStack>>();
+        public Dictionary<ItemType,Dictionary<uint,ItemStack>> inventoryData = new Dictionary<ItemType, Dictionary<uint, ItemStack>>();
         public Dictionary<string, LocalItemStack> dungeonInventoryData = new Dictionary<string, LocalItemStack>();
 
         public void Gain(ItemType itemType,uint itemId,uint count)
@@ -31,6 +30,7 @@ namespace Game.DungeonModule
             }
             itemStack.Count += count;
             itemDic[itemId] = itemStack;
+            Events.Publish<InventoryEvents.Changed>();
         }
 
         public void GainLocalItem(string itemKey, uint count)
@@ -46,7 +46,7 @@ namespace Game.DungeonModule
 
             localItemStack.Count += count;
             dungeonInventoryData[itemKey] = localItemStack;
-            
+            Events.Publish<InventoryEvents.Changed>();
         }
 
 

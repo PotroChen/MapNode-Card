@@ -25,6 +25,8 @@ namespace Game.UI
         
         private GameObject go_FirstLevelMenu;
         
+        private RecycleList list_InventoryInfoes;
+        
         protected GameObject NodeSubPanelRoot
         {
             get
@@ -57,6 +59,14 @@ namespace Game.UI
             }
         }
         
+        protected RecycleList List_InventoryInfoes
+        {
+            get
+            {
+                return this.list_InventoryInfoes;
+            }
+        }
+        
         protected override void BindParameter()
         {
             base.BindParameter();
@@ -65,6 +75,7 @@ namespace Game.UI
             nodeDescRoot = binder.GetGameObject("NodeDescRoot");
             txt_NodeDesc = binder.GetGameObject("Txt_NodeDesc");
             go_FirstLevelMenu = binder.GetGameObject("Go_FirstLevelMenu");
+            list_InventoryInfoes = binder.GetComponent("List_InventoryInfoes") as RecycleList;
         }
     }
 }
