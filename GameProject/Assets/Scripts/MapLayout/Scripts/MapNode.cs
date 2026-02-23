@@ -14,9 +14,9 @@ namespace Game
         private string m_GUIDStr;
 
         private Guid m_GUID;
-        public Guid GUID 
-        { 
-            get 
+        public Guid GUID
+        {
+            get
             {
                 if (m_GUID == default)
                 {
@@ -24,7 +24,7 @@ namespace Game
                     {
                         return Guid.Empty;
                     }
-                    if(!Guid.TryParse(m_GUIDStr, out m_GUID))
+                    if (!Guid.TryParse(m_GUIDStr, out m_GUID))
                     {
                         return Guid.Empty;
                     }
@@ -101,7 +101,7 @@ namespace Game
 
         public MapNode GetConnectedNodeAt(int index)
         {
-            if(ConnectedNodes == null)
+            if (ConnectedNodes == null)
                 return null;
             if (index < 0 || index >= ConnectedNodes.Count)
                 return null;
@@ -111,7 +111,7 @@ namespace Game
 
         public void AddConnectedNode(MapNode node)
         {
-            if(ConnectedNodes == null)
+            if (ConnectedNodes == null)
                 ConnectedNodes = new List<string>();
             ConnectedNodes.Add(node.GUID.ToString());
 
@@ -140,6 +140,19 @@ namespace Game
                     break;
                 }
             }
+        }
+
+        public bool CanEnter()
+        {
+            if (m_Entities != null)
+            {
+                foreach (var entity in m_Entities)
+                {
+                    if (entity is ICanEnter ce && !ce.CanEnter())
+                        return false;
+                }
+            }
+            return true;
         }
     }
 

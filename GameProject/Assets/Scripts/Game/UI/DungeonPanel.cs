@@ -149,6 +149,21 @@ namespace Game.UI
                             UIManager.Goto<ChestEntityPanel>(uiData);
                             break;
                         }
+                    case DoorEntity doorEntity:
+                        {
+                            HideNodePanel();
+
+                            var itemDefine = doorEntity.GetItemDefine(doorEntity.ItemToUnlock);
+                            var uiData = new CommanMapEntityPanel.Data();
+                            uiData.OperateItemDatas = new List<MapEntityOperateViewData>();
+                            MapEntityOperateViewData op = new MapEntityOperateViewData();
+                            op.Text = $"开锁(需要{itemDefine.Name} x {1})";
+                            op.onClick = () =>
+                            {
+                                doorEntity.TryUnlock(dungeon.Player);
+                            };
+                            break;
+                        }
                     default:
                         throw new NotImplementedException();
                 }

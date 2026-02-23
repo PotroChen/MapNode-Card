@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Game.MapLayout;
 
 namespace Game
 {
@@ -19,6 +20,11 @@ namespace Game
         public virtual string GetInteractionName()
         {
             return "交互";
+        }
+
+        public ItemDefine GetItemDefine(string itemKey)
+        {
+            return Owner.Layout.GetItemDefine(itemKey);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Game.DungeonModule
         {
             Vector2Int nextPosition = player.Position + moveDirection;
             MapNode nextNode = map.GetNode(nextPosition);
-            if (nextNode == null)
+            if (nextNode == null|| !nextNode.CanEnter())
             {
                 OnPlayerMoveFailed?.Invoke(this);
             }

@@ -206,7 +206,9 @@ namespace Game
 
         public ItemDefine GetItemDefine(string itemKey)
         {
-            key2LocalItemDic.TryGetValue(itemKey, out var item);
+            bool contain = key2LocalItemDic.TryGetValue(itemKey, out var item);
+            if(!contain)
+                Debug.LogError($"Exist unknown localItem:{itemKey}");
             return item;
         }
         #endregion

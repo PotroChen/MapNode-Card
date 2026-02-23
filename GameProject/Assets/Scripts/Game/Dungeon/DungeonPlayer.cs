@@ -49,8 +49,27 @@ namespace Game.DungeonModule
             Events.Publish<InventoryEvents.Changed>();
         }
 
+        public uint GetLocalItemCount(string itemKey)
+        {
+            if (dungeonInventoryData.TryGetValue(itemKey, out var itemStack) && itemStack.Count > 0)
+                return itemStack.Count;
+            return 0;
+        }
 
+        public bool TryCostLocalItem(string itemKey, uint count)
+        {
+            if(count <= 0)
+                return true;
 
+            if (!dungeonInventoryData.TryGetValue(itemKey, out var itemStack))
+                return false;
+
+            if (itemStack.Count < count)
+                return false;
+            itemStack.Count -= count;
+            dungeonInventoryData[itemKey] = itemStack;
+            return true;
+        }
     }
 
 }
