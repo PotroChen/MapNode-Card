@@ -85,6 +85,7 @@ namespace Game
                 entityList.onAddCallback += OnClick_AddEntity;
                 entityList.onRemoveCallback+= OnClick_RemoveEntity;
                 entityList.onSelectCallback += OnClick_SelectEntity;
+                entityList.drawElementCallback += DrawEntityListItem;
             }
             entityList.DoLayoutList();
         }
@@ -121,6 +122,14 @@ namespace Game
             var mapEntity = reorderableList.list[selectedIndex] as MapEntity;
             Selection.activeObject = mapEntity;
         }
+
+        private void DrawEntityListItem(Rect rect, int index, bool isActive, bool isFocused)
+        {
+            var entity = selectedData.Entities[index];
+            var newName = EditorGUI.TextField(rect, entity.DisplayName);
+            if(newName!= entity.DisplayName)
+                entity.DisplayName = newName;
+        }
         #endregion
 
         private void ShowAddEntityMenu()
@@ -130,6 +139,12 @@ namespace Game
             menu.AddItem(new GUIContent("Chest Entity"), false, () => {
                 var chestEntity =  ScriptableObject.CreateInstance<ChestEntity>();
                 AddEntity(chestEntity,selectedData);
+                AssetDatabase.Refresh();
+            });
+            menu.AddItem(new GUIContent("Door Entity"), false, () =>
+            {
+                var doorEntity = ScriptableObject.CreateInstance<DoorEntity>();
+                AddEntity(doorEntity, selectedData);
                 AssetDatabase.Refresh();
             });
             menu.ShowAsContext();
