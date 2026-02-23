@@ -170,18 +170,6 @@ namespace Game.UI
         private void OnInvevntoryChanged()
         {
             inventoryInfoes.Clear();
-            int infoCount = 0;
-            //暂时不支持
-            //if (dungeon.Player.inventoryData != null)
-            //{
-            //    foreach (var kvp in dungeon.Player.inventoryData)
-            //    {
-            //        var infoes = kvp.Value;
-            //        if (infoes == null)
-            //            continue;
-            //        infoCount += infoes.Count;
-            //    }
-            //}
 
             if (dungeon.Player.dungeonInventoryData != null)
             {

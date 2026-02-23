@@ -1,9 +1,10 @@
 namespace Game.UI
 {
-    using GameFramework.UIKit;
-    using UnityEngine;
-    using System;
     using Game.DungeonModule;
+    using GameFramework.UIKit;
+    using System;
+    using UnityEngine;
+    using UnityEngine.UI;
 
     public partial class ChestEntityPanel : UIPanel
     {
@@ -29,6 +30,8 @@ namespace Game.UI
 
         protected override void OnShow()
         {
+            toggle_GoBack.Click.RemoveAllListeners();
+            toggle_GoBack.Click.AddListener(() => { UIManager.Goback(); });
             Refresh();
         }
 
@@ -39,6 +42,8 @@ namespace Game.UI
         private void Refresh()
         {
             menuRoot.FillList(entity.Items.Length, RefreshMenuItem);
+            var rectTransform = menuRoot.GetComponent<RectTransform>();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         }
 
         private void RefreshMenuItem(int index,GameObject menuItemGo)

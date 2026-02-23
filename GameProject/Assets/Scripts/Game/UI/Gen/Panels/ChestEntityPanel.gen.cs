@@ -21,6 +21,8 @@ namespace Game.UI
         
         private RecycleList menuRoot;
         
+        private ExToggle toggle_GoBack;
+        
         protected GameObject Go_Root
         {
             get
@@ -37,12 +39,21 @@ namespace Game.UI
             }
         }
         
+        protected ExToggle Toggle_GoBack
+        {
+            get
+            {
+                return this.toggle_GoBack;
+            }
+        }
+        
         protected override void BindParameter()
         {
             base.BindParameter();
             var binder = m_Root.GetComponent<UIParameterBinder>();
             go_Root = binder.GetGameObject("Go_Root");
             menuRoot = binder.GetComponent("MenuRoot") as RecycleList;
+            toggle_GoBack = binder.GetComponent("Toggle_GoBack") as ExToggle;
         }
     }
 }
