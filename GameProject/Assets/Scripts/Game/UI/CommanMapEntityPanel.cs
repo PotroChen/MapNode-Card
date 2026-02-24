@@ -1,3 +1,4 @@
+using Game.DungeonModule;
 using GameFramework.UIKit;
 using System;
 using System.Collections.Generic;
@@ -21,18 +22,23 @@ namespace Game.UI
 
         public class Data : IData
         {
+            public Dungeon dungeon;
             public List<MapEntityOperateViewData> OperateItemDatas;
         }
 
+        private Dungeon dungeon;
         private List<MapEntityOperateViewData> opItems = new List<MapEntityOperateViewData>();
         protected override void OnInit(IData data)
         {
             opItems.Clear();
             var convertedData = data as CommanMapEntityPanel.Data;
+            dungeon = convertedData.dungeon;
             if (convertedData?.OperateItemDatas != null)
             {
                 opItems.AddRange(convertedData.OperateItemDatas);
             }
+            dungeon.OnPlayerMoved -= OnPlayerMoved;
+            dungeon.OnPlayerMoved += OnPlayerMoved;
         }
 
         protected override void OnShow()
@@ -44,6 +50,16 @@ namespace Game.UI
 
         protected override void OnHide()
         {
+        }
+
+        protected override void OnPurge()
+        {
+            dungeon.OnPlayerMoved -= OnPlayerMoved;
+        }
+
+        private void OnPlayerMoved(Dungeon dungeon, Vector2Int position)
+        {
+            UIManager.Goback();
         }
 
         private void Refresh()
@@ -59,7 +75,7 @@ namespace Game.UI
             toggle.Click.RemoveAllListeners();
 
             var opItemData = opItems[index];
-            UIUtils.SetText(itemGo, opItemData.Text);
+            UIUtils.SetText(itemGo, "Text", opItemData.Text);
             toggle.Click.AddListener(() =>
             {
                 opItemData.onClick?.Invoke();

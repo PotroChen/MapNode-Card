@@ -1,4 +1,5 @@
 using Game.DungeonModule;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,19 @@ using UnityEngine;
 namespace Game
 {
     //假设此时，只需要通过1个LocalItem,且数量也只需要一个
-    public class DoorEntity : MapEntity,ICanEnter
+    public class DoorEntity : MapEntity,ICanPass
     {
         [SerializeField]
         internal string m_ItemToUnlock;
         public string ItemToUnlock => m_ItemToUnlock;
 
-        public bool IsUnlocked { get; private set; } = false;
+        [NonSerialized]
+        private bool m_IsUnlocked = false;
+        public bool IsUnlocked
+        {
+            get { return m_IsUnlocked; }
+            private set { m_IsUnlocked = value; }
+        }
 
         public bool TryUnlock(DungeonPlayer dungeonPlayer)
         {
@@ -23,14 +30,18 @@ namespace Game
             }
 
             if (dungeonPlayer.TryCostLocalItem(m_ItemToUnlock, 1))
+            {
+                IsUnlocked = true;
                 return true;
+            }
             Debug.Log($"Do not contain item:{itemDefine.Name},Count:{1}");
             return false;
         }
 
-        public bool CanEnter()
+        public bool CanPass()
         {
-            Debug.Log($"被{DisplayName}挡住");
+            if(!IsUnlocked)
+                Debug.Log($"被{DisplayName}挡住");
             return IsUnlocked;
         }
     }

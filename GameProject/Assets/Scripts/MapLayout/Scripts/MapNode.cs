@@ -142,13 +142,13 @@ namespace Game
             }
         }
 
-        public bool CanEnter()
+        public bool CanPass()
         {
             if (m_Entities != null)
             {
                 foreach (var entity in m_Entities)
                 {
-                    if (entity is ICanEnter ce && !ce.CanEnter())
+                    if (entity is ICanPass ce && !ce.CanPass())
                         return false;
                 }
             }

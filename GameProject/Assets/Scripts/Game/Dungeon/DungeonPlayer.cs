@@ -68,6 +68,7 @@ namespace Game.DungeonModule
                 return false;
             itemStack.Count -= count;
             dungeonInventoryData[itemKey] = itemStack;
+            Events.Publish<InventoryEvents.Changed>();
             return true;
         }
     }

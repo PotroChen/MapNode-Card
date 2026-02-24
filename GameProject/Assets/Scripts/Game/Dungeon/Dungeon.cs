@@ -29,6 +29,7 @@ namespace Game.DungeonModule
 
         public MapLayout Map => map;
         public DungeonPlayer Player => player;
+
         #region Events
         public event Action<Dungeon> OnEntered;
         public event Action<Dungeon> OnExited;
@@ -54,7 +55,7 @@ namespace Game.DungeonModule
         {
             dungeonMapAssetOp = Addressables.LoadAssetAsync<MapLayout>(mapPath);
             dungeonMapAssetOp.WaitForCompletion();
-            map = dungeonMapAssetOp.Result;
+            map = MapLayout.Instantiate(dungeonMapAssetOp.Result);
             map.Init();
 
             player = new DungeonPlayer();
@@ -68,6 +69,7 @@ namespace Game.DungeonModule
         private void OnEnter()
         {
             player.Position = map.StartNode.Position;
+            lastPosition = player.Position;
             OnEntered?.Invoke(this);
         }
 
@@ -76,16 +78,20 @@ namespace Game.DungeonModule
             OnExited?.Invoke(this);
         }
 
+        private Vector2Int lastPosition = default;
         public void PlayerMove(Vector2Int moveDirection)
         {
             Vector2Int nextPosition = player.Position + moveDirection;
+            MapNode currentNode = map.GetNode(player.Position);
             MapNode nextNode = map.GetNode(nextPosition);
-            if (nextNode == null|| !nextNode.CanEnter())
+            if (currentNode == null 
+                || (!currentNode.CanPass() && nextPosition != lastPosition))//不能通过的话(只能回到原来的位置)
             {
                 OnPlayerMoveFailed?.Invoke(this);
             }
             else
             {
+                lastPosition = player.Position;
                 player.Position = nextPosition;
                 OnPlayerMoved?.Invoke(this,nextPosition);
             }

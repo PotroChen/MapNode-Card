@@ -26,6 +26,8 @@ namespace Game.UI
             var convertedData = data as ChestEntityPanel.Data;
             entity = convertedData.entity;
             dungeon = convertedData.dungon;
+            dungeon.OnPlayerMoved -= OnPlayerMoved;
+            dungeon.OnPlayerMoved += OnPlayerMoved;
         }
 
         protected override void OnShow()
@@ -37,6 +39,16 @@ namespace Game.UI
 
         protected override void OnHide() 
         {
+        }
+
+        protected override void OnPurge()
+        {
+            dungeon.OnPlayerMoved -= OnPlayerMoved;
+        }
+
+        private void OnPlayerMoved(Dungeon dungeon, Vector2Int position)
+        {
+            UIManager.Goback();
         }
 
         private void Refresh()

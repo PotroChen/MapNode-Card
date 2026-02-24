@@ -5,6 +5,7 @@ using System;
 using GameFramework;
 using Game.Inventory;
 using System.Collections.Generic;
+
 namespace Game.UI
 {
     public class DungeonPanelData:IData
@@ -155,6 +156,7 @@ namespace Game.UI
 
                             var itemDefine = doorEntity.GetItemDefine(doorEntity.ItemToUnlock);
                             var uiData = new CommanMapEntityPanel.Data();
+                            uiData.dungeon = dungeon;
                             uiData.OperateItemDatas = new List<MapEntityOperateViewData>();
                             MapEntityOperateViewData op = new MapEntityOperateViewData();
                             op.Text = $"开锁(需要{itemDefine.Name} x {1})";
@@ -162,6 +164,8 @@ namespace Game.UI
                             {
                                 doorEntity.TryUnlock(dungeon.Player);
                             };
+                            uiData.OperateItemDatas.Add(op);
+                            UIManager.Goto<CommanMapEntityPanel>(uiData);
                             break;
                         }
                     default:
